@@ -85,7 +85,7 @@ describe IPPacket do
   context "when writing a PCAP file to disk" do
     before :each do
       @ip_packet = IPPacket.new
-      @temp_file = Tempfile.new('ip_pcap')
+      @temp_file = Tempfile.new('ip_pcap', encoding: Encoding::ASCII_8BIT)
     end
 
     after(:each) { @temp_file.close; @temp_file.unlink }

@@ -4,11 +4,11 @@ require 'pp'
 before = ARGV.shift
 after = ARGV.shift
 
-fio = File.open(before)
+fio = File.open(before, 'rb')
 before_data = Marshal.load(fio)
 fio.close
 
-fio = File.open(after)
+fio = File.open(after, 'rb')
 after_data = Marshal.load(fio)
 fio.close
 

@@ -23,14 +23,14 @@ module PacketFu
 
       context 'when reading' do
         it 'should accept a String' do
-          str = ::File.read(::File.join(__dir__, '../..', 'test', 'sample.pcapng'), 52)
+          str = ::File.binread(::File.join(__dir__, '../..', 'test', 'sample.pcapng'), 52)
           expect { @shb.read(str) }.to_not raise_error
           expect(@shb.block_len.to_i).to eq(52)
           expect(@shb.has_options?).to be(true)
         end
 
         it 'should accept an IO' do
-          ::File.open(::File.join(__dir__, '../..', 'test', 'sample.pcapng')) do |f|
+          ::File.open(::File.join(__dir__, '../..', 'test', 'sample.pcapng'), 'rb') do |f|
             @shb.read(f)
           end
           expect(@shb.block_len.to_i).to eq(52)

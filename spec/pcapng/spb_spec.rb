@@ -18,7 +18,7 @@ module PacketFu
 
       context 'when reading' do
         it 'should accept a String' do
-          str = ::File.read(::File.join(__dir__, '../..', 'test',
+          str = ::File.binread(::File.join(__dir__, '../..', 'test',
                                         'sample-spb.pcapng'))[128, 0x14c]
           expect { @spb.read str }.to_not raise_error
           expect(@spb.type.to_i).to eq(PcapNG::SPB_TYPE.to_i)
@@ -28,7 +28,7 @@ module PacketFu
         end
 
         it 'should accept an IO' do
-          ::File.open(::File.join(__dir__, '../..', 'test', 'sample-spb.pcapng')) do |f|
+          ::File.open(::File.join(__dir__, '../..', 'test', 'sample-spb.pcapng'), 'rb') do |f|
             f.seek(128, :CUR)
             @spb.read f
           end

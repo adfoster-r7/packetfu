@@ -27,7 +27,7 @@ module PacketFu
 
       context 'when reading' do
         it 'should accept a String' do
-          str = ::File.read(::File.join(__dir__, '../..', 'test', 'sample.pcapng'))[52, 32]
+          str = ::File.binread(::File.join(__dir__, '../..', 'test', 'sample.pcapng'))[52, 32]
           expect { @idb.read(str) }.to_not raise_error
           expect(@idb.type.to_i).to eq(PcapNG::IDB_TYPE.to_i)
           expect(@idb.block_len.to_i).to eq(32)
@@ -37,7 +37,7 @@ module PacketFu
         end
 
         it 'should accept an IO' do
-          ::File.open(::File.join(__dir__, '../..', 'test', 'sample.pcapng')) do |f|
+          ::File.open(::File.join(__dir__, '../..', 'test', 'sample.pcapng'), 'rb') do |f|
             f.seek(52, :CUR)
             @idb.read f
           end

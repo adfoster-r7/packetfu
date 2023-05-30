@@ -62,7 +62,7 @@ end
 if file_pfx
   filename = "#{file_pfx}.dat"
   puts "dumping data to #{filename}"
-  fio = File.open(filename, "w")
+  fio = File.open(filename, "wb")
   Marshal.dump(data, fio)
   fio.close
 end

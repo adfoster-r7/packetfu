@@ -8,8 +8,7 @@ include PacketFu
 
 describe PcapHeader do
   before(:all) do
-    @file = File.open("test/sample.pcap") {|f| f.read}
-    @file.force_encoding "binary" if @file.respond_to? :force_encoding
+    @file = File.binread("test/sample.pcap")
     @file_magic = @file[0,4]
     @file_header = @file[0,24]
   end
@@ -68,7 +67,7 @@ end
 
 describe Timestamp do
   before(:all) do
-    @file = File.open("test/sample.pcap") {|f| f.read}
+    @file = File.binread("test/sample.pcap")
     @ts = @file[24,8]
   end
 
@@ -90,8 +89,7 @@ end
 
 describe PcapPacket do
   before(:all) do
-    @file = File.open('test/sample.pcap') {|f| f.read}
-    @file.force_encoding "binary" if @file.respond_to? :force_encoding
+    @file = File.binread('test/sample.pcap')
     @header = @file[0,24]
     @packet = @file[24,100] # pkt is 78 bytes + 16 bytes pcap hdr == 94
   end
@@ -137,7 +135,7 @@ end
 
 describe PcapPackets do
   before(:all) do
-    @file = File.open('test/sample.pcap') {|f| f.read}
+    @file = File.binread('test/sample.pcap')
   end
 
   context "when initializing" do
@@ -176,15 +174,14 @@ describe PcapFile do
   end
 
   context "when reading and writing" do
-    before(:each) { @temp_file = Tempfile.new('pcap_pcap') }
+    before(:each) { @temp_file = Tempfile.new('pcap_pcap', encoding: Encoding::ASCII_8BIT) }
     after(:each) { @temp_file.close; @temp_file.unlink }
 
     it "should read via #read and write via #to_file" do
       pcap_file = PcapFile.new
       pcap_file.read @file
       pcap_file.to_file(:filename => @temp_file.path)
-      newfile = File.open(@temp_file.path) {|f| f.read(f.stat.size)}
-      newfile.force_encoding "binary" if newfile.respond_to? :force_encoding
+      newfile = File.binread(@temp_file.path)
       expect(newfile).to eql(@file)
 
       pcap_file.to_file(:filename => @temp_file.path, :append => true)
@@ -268,7 +265,7 @@ describe Write do
   end
 
   context "when writing" do
-    before(:each) { @temp_file = Tempfile.new('write_pcap') }
+    before(:each) { @temp_file = Tempfile.new('write_pcap', encoding: Encoding::ASCII_8BIT) }
     after(:each) { @temp_file.close; @temp_file.unlink }
 
     it "should read from a string" do

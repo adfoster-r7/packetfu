@@ -66,7 +66,7 @@ describe ICMPv6Packet, "when read from a pcap file" do
   context "when reading/writing ICMPv6Packet to disk" do
     before :each do
       @icmpv6_packet = ICMPv6Packet.new
-      @temp_file = Tempfile.new('icmpv6_pcap')
+      @temp_file = Tempfile.new('icmpv6_pcap', encoding: Encoding::ASCII_8BIT)
     end
 
     after(:each) { @temp_file.close; @temp_file.unlink }

@@ -20,7 +20,7 @@ require 'packetfu'
 # Takes a file name, parses the packets, and records the packet
 # type based on its PacketFu class.
 def count_packet_types(file)
-  file = File.open(file) {|f| f.read}
+  file = File.open(file, 'rb') {|f| f.read}
   stats = {}
   count = 0
   pcapfile = PacketFu::PcapPackets.new

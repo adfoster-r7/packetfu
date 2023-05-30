@@ -24,7 +24,7 @@ module PacketFu
         end
 
         it 'should accept an IO' do
-          ::File.open(::File.join(__dir__, '../..', 'test', 'sample.pcapng')) do |f|
+          ::File.open(::File.join(__dir__, '../..', 'test', 'sample.pcapng'), 'rb') do |f|
             @ub.read(f)
           end
           expect(@ub.type.to_i).to eq(0x0a0d0d0a)

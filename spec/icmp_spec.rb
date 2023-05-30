@@ -73,7 +73,7 @@ describe ICMPPacket, "when read from a pcap file" do
   context "when reading/writing ICMPPacket to disk" do
     before :each do
       @icmp_packet = ICMPPacket.new
-      @temp_file = Tempfile.new('icmp_pcap')
+      @temp_file = Tempfile.new('icmp_pcap', encoding: Encoding::ASCII_8BIT)
     end
 
     after(:each) { @temp_file.close; @temp_file.unlink }

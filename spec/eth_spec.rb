@@ -115,7 +115,7 @@ describe EthPacket do
   end
 
   context "when reading/writing PCAP to file" do
-    before(:each) { @temp_file = Tempfile.new('arp_pcap') }
+    before(:each) { @temp_file = Tempfile.new('arp_pcap', encoding: Encoding::ASCII_8BIT) }
     after(:each) { @temp_file.close; @temp_file.unlink }
 
 

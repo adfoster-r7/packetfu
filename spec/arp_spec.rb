@@ -180,7 +180,7 @@ describe ARPPacket do
   context "when writing ARPPacket to PCAP" do
     before :each do
       @arp_packet = ARPPacket.new
-      @temp_file = Tempfile.new('arp_pcap')
+      @temp_file = Tempfile.new('arp_pcap', encoding: Encoding::ASCII_8BIT)
     end
 
     after(:each) { @temp_file.close; @temp_file.unlink }
